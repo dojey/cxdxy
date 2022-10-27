@@ -28,8 +28,7 @@ jobs:
           AUUID="c8393b30-3d7e-4bb4-af5a-9e869cc56137"
           ParameterSSENCYPT="chacha20-ietf-poly1305"
           #PORT=80
-          #cat ./etc/Caddyfile | sed -e "1c :$PORT" -e "s/\$AUUID/$AUUID/g" -e "s/\$MYUUID-HASH/$("${TMP_DIRECTORY}/caddy" hash-password --plaintext $AUUID)/g" >./Caddyfile
-          cat ./etc/Caddyfile | sed -e "s/\$AUUID/$AUUID/g" -e "s/\$MYUUID-HASH/$("${TMP_DIRECTORY}/caddy" hash-password --plaintext $AUUID)/g" >./Caddyfile
+          cat ./etc/Caddyfile | sed -e "1c :$PORT" -e "s/\$AUUID/$AUUID/g" -e "s/\$MYUUID-HASH/$("${TMP_DIRECTORY}/caddy" hash-password --plaintext $AUUID)/g" >./Caddyfile
           cat ./etc/xray.json | sed -e "s/\$AUUID/$AUUID/g" -e "s/\$ParameterSSENCYPT/$ParameterSSENCYPT/g" >./config.json
           
           git config user.name github-actions
