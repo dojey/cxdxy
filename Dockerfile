@@ -11,7 +11,7 @@ RUN go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest && \
 	
 FROM alpine:edge
 COPY --from=xray /tmp/xray /usr/bin 
-COPY --from=caddy /usr/bin/caddy /usr/bin
+COPY --from=caddy /go/caddy /usr/bin
 COPY entrypoint.sh /usr/bin
 
 RUN set -xe \
