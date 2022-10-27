@@ -6,12 +6,12 @@ RUN git clone --progress https://github.com/XTLS/Xray-core.git . && \
     CGO_ENABLED=0 go build -o /tmp/xray -trimpath -ldflags "-s -w -buildid=" ./main 
 	
 FROM golang:alpine AS caddy	
-RUN go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest && \
-	xcaddy build latest
+RUN go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest 
+    #xcaddy build latest
 	
 FROM alpine:edge
 COPY --from=xray /tmp/xray /usr/bin 
-COPY --from=caddy /usr/bin/caddy /usr/bin
+COPY --from=caddy /go/caddy /usr/bin
 COPY entrypoint.sh /usr/bin
 
 RUN set -xe \
