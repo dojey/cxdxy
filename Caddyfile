@@ -1,4 +1,4 @@
-:80
+:
 root * /usr/share/caddy
 file_server browse
 
@@ -10,7 +10,7 @@ header {
 }
 
 basicauth /c8393b30-3d7e-4bb4-af5a-9e869cc56137/* {
-    c8393b30-3d7e-4bb4-af5a-9e869cc56137 $2a$14$rFTt7zC8UDDsckn.d8XvVuFeKqyiEhSMpQyO8QeWA0cnMs1K9o1jy
+    c8393b30-3d7e-4bb4-af5a-9e869cc56137 $2a$14$eJZjajJu39NwxEiGVGN7yOGGfzKzlVgbiiqkT7aQ5IdS7hQgnit8K
 }
 
 @websocket_xray_vmess {
