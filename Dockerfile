@@ -17,7 +17,7 @@ COPY entrypoint.sh /usr/bin
 RUN set -xe \
     && apk update \
     && apk add --no-cache ca-certificates tor wget \
-	&& mkdir -p /etc/xray /etc/caddy /usr/share/caddy \
+    && mkdir -p /etc/xray /etc/caddy /usr/share/caddy \
     && echo -e "User-agent: *\nDisallow: /" >/usr/share/caddy/robots.txt \
     && wget https://raw.githubusercontent.com/caddyserver/dist/master/welcome/index.html -O /usr/share/caddy/index.html \
     && chmod +x /usr/bin/xray \
