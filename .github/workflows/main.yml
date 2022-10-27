@@ -1,0 +1,39 @@
+name: makefile
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: 0 8 * * *
+
+jobs:
+  makefile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Echo Caddy VersionVersion
+        #id: getVersion
+        run: |
+          TMP_FILE="$(mktemp)"
+          wget -q 'https://api.github.com/repos/caddyserver/caddy/releases/latest' -O "$TMP_FILE"
+          RELEASE_LATEST="$(sed 'y/,/\n/' "$TMP_FILE" | grep 'tag_name' | awk -F '"' '{print substr($4,2)}')"
+          RELEASE_VERSION="v${RELEASE_LATEST#v}"
+          "rm" "$TMP_FILE"
+          DOWNLOAD_LINK="https://github.com/caddyserver/caddy/releases/download/$RELEASE_VERSION/caddy_${RELEASE_LATEST}_linux_amd64.tar.gz"
+          echo "Downloading Caddy archive: $DOWNLOAD_LINK"
+          TMP_DIRECTORY="$(mktemp -d)"
+          ZIP_FILE="${TMP_DIRECTORY}/caddy_${RELEASE_LATEST}_linux_amd64.tar.gz"
+          wget -q "$DOWNLOAD_LINK" -O "$ZIP_FILE"
+          tar -zxf "$ZIP_FILE" -C "$TMP_DIRECTORY"
+          AUUID="c8393b30-3d7e-4bb4-af5a-9e869cc56137"
+          ParameterSSENCYPT="chacha20-ietf-poly1305"
+          PORT=80
+          cat ./etc/Caddyfile | sed -e "1c :$PORT" -e "s/\$AUUID/$AUUID/g" -e "s/\$MYUUID-HASH/$("${TMP_DIRECTORY}/caddy" hash-password --plaintext $AUUID)/g" >./Caddyfile
+          cat ./etc/xray.json | sed -e "s/\$AUUID/$AUUID/g" -e "s/\$ParameterSSENCYPT/$ParameterSSENCYPT/g" >./config.json
+          
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "$(git log -1 --pretty=%s)"
+          git push --force https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} main
+          
