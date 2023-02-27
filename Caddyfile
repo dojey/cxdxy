@@ -10,7 +10,7 @@ header {
 }
 
 basicauth /c8393b30-3d7e-4bb4-af5a-9e869cc56137/* {
-    c8393b30-3d7e-4bb4-af5a-9e869cc56137 $2a$14$nsyG51Yk569KNkKa5u.Zh.RSJrsG7lx5CRVZYdzMxAsBZUcvKe2V.
+    c8393b30-3d7e-4bb4-af5a-9e869cc56137 $2a$14$rUR4CyolhyESaZbBLKDfnO1dSeotzauykTUL6RrIv3tGQscMfhG9e
 }
 
 @websocket_xray_vmess {
